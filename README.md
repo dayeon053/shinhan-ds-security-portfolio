@@ -45,7 +45,7 @@
 
 ### 통합 과정에서 확인한 문제와 조치
 
-모듈을 연결하는 과정에서 숫자 저장 형식과 등급 매핑 기준을 점검했습니다. BigDecimal 변환 헬퍼와 등급 매핑 계약을 정리하고 통합 가이드에 반영했습니다. 프론트의 변수별 최댓값 산출과 공용 모델의 항목별 점수 최댓값 산출 방식이 서로 다르다는 점도 검토 문서에 남겼습니다. 개인 맞춤 위험도 서버 구현은 완료 범위에 포함되지 않습니다.
+모듈을 연결하는 과정에서 숫자 저장 형식과 등급 매핑 기준을 점검했습니다. BigDecimal 변환 헬퍼와 등급 매핑 계약을 정리하고 통합 가이드에 반영했습니다. 프론트의 변수별 최댓값 산출과 공용 모델의 항목별 점수 최댓값 산출 방식이 서로 다르다는 점도 검토 문서에 남겼습니다. 이후 PR #30에서 개인 맞춤 위험도의 대표값 계산을 항목별 점수의 최댓값에서 변수별 최댓값 합성 방식으로 바꾸고, 두 방식의 결과 차이와 예외 입력을 회귀 테스트로 확인했습니다.
 
 산출식과 등급 경계뿐 아니라 LLM 응답 파싱, 저장 변환을 포함한 회귀 테스트를 추가했습니다. 동의항목 조회 서비스는 사용자의 선택 상태와 반환 값이 맞는지 별도로 검증했습니다. 모델의 계산 결과와 서비스의 조회 동작을 나누어 확인한 작업입니다.
 
@@ -53,12 +53,13 @@
 
 - PR #20에는 공용 모델 28개 테스트 통과 기록이 있습니다. 별도 backend `contextLoads`의 기존 실패는 남아 있었습니다.
 - PR #21에는 필수 및 선택 동의항목 조회와 사용자 선택 여부를 다루는 서비스 테스트 3개 통과 기록이 있습니다.
-- 두 PR은 `develop`에 병합됐습니다. 테스트 수치는 해당 PR의 실행 기록입니다.
+- PR #25에서는 두 스레드가 같은 기업의 서로 다른 선택동의를 동시에 변경하는 상황을 5회 반복하는 테스트를 추가했습니다. H2 테스트 환경에서 5회 통과한 리뷰 기록이 있습니다.
+- PR #20, #21, #25, #30은 `develop`에 병합됐습니다. 테스트 수치는 해당 PR의 실행 기록입니다.
 - 사용자 실험은 팀원 4명이 공동 수행했고 통계 집계는 다른 팀원이 담당했습니다. 논문은 수정 후 재심 상태입니다.
 
 구현 범위는 자체 DB와 API에서 동의 정보를 조회하고 관리하는 흐름입니다. 외부 서비스의 동의 일괄 철회와 법규 준수 인증은 검증 범위에 포함되지 않습니다.
 
-**코드와 검증 기록:** [회귀 테스트, 타입 변환 PR #20](https://github.com/dayeon053/dynamic-consent-system/pull/20), [동의항목 조회 API PR #21](https://github.com/dayeon053/dynamic-consent-system/pull/21), [개발 브랜치](https://github.com/dayeon053/dynamic-consent-system/tree/develop)
+**코드와 검증 기록:** [회귀 테스트, 타입 변환 PR #20](https://github.com/dayeon053/dynamic-consent-system/pull/20), [동의항목 조회 API PR #21](https://github.com/dayeon053/dynamic-consent-system/pull/21), [동시 변경 검증 PR #25](https://github.com/dayeon053/dynamic-consent-system/pull/25), [개인 맞춤 위험도 계산 PR #30](https://github.com/dayeon053/dynamic-consent-system/pull/30), [개발 브랜치](https://github.com/dayeon053/dynamic-consent-system/tree/develop)
 
 <a id="project-2"></a>
 
